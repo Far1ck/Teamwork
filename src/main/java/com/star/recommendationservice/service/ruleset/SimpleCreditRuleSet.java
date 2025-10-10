@@ -2,10 +2,12 @@ package com.star.recommendationservice.service.ruleset;
 
 import com.star.recommendationservice.model.Recommendation;
 import com.star.recommendationservice.repository.RecommendationsServiceRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class SimpleCreditRuleSet implements RecommendationRuleSet {
 
     private final RecommendationsServiceRepository recommendationsServiceRepository;
@@ -20,7 +22,9 @@ public class SimpleCreditRuleSet implements RecommendationRuleSet {
         if (recommendationsServiceRepository.creditTransactionIsExist(userId) == 0
         && recommendationsServiceRepository.getDebitDepositSum(userId) > debitWithdrawSum
         && debitWithdrawSum > 100000) {
-            return Optional.of(new Recommendation("Простой кредит", UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"),
+            return Optional.of(new Recommendation(
+                    UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"),
+                    "Простой кредит",
                     """
                             Откройте мир выгодных кредитов с нами!
                             

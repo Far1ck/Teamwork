@@ -21,7 +21,9 @@ public class Invest500RuleSet implements RecommendationRuleSet {
         if (recommendationsServiceRepository.debitTransactionIsExist(userId) > 0
         && recommendationsServiceRepository.investTransactionIsExist(userId) == 0
         && recommendationsServiceRepository.getSavingDepositSum(userId) > 1000) {
-            return Optional.of(new Recommendation("Invest 500", UUID.fromString("147f6a0f-3b91-413b-ab99-87f081d60d5a"),
+            return Optional.of(new Recommendation(
+                    UUID.fromString("147f6a0f-3b91-413b-ab99-87f081d60d5a"),
+                    "Invest 500",
                     "Откройте свой путь к успеху с " +
                     "индивидуальным инвестиционным счетом (ИИС) от нашего банка! Воспользуйтесь налоговыми " +
                     "льготами и начните инвестировать с умом. Пополните счет до конца года и получите выгоду " +

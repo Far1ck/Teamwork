@@ -23,8 +23,7 @@ public class TopSavingRuleSet implements RecommendationRuleSet {
                 && (debitDepositSum >= 50000 || recommendationsServiceRepository.getSavingDepositSum(userId) >= 50000)
                 && debitDepositSum > recommendationsServiceRepository.getDebitWithdrawSum(userId)) {
             return Optional.of(new Recommendation(
-                    UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"),
-                    "Top Saving",
+                    "Top Saving", UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"),
                     """
                     Откройте свою собственную \
                     «Копилку» с нашим банком! «Копилка» — это уникальный банковский инструмент, который поможет \

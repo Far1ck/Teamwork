@@ -23,8 +23,7 @@ public class SimpleCreditRuleSet implements RecommendationRuleSet {
         && recommendationsServiceRepository.getDebitDepositSum(userId) > debitWithdrawSum
         && debitWithdrawSum > 100000) {
             return Optional.of(new Recommendation(
-                    UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"),
-                    "Простой кредит",
+                    "Простой кредит", UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"),
                     """
                             Откройте мир выгодных кредитов с нами!
                             

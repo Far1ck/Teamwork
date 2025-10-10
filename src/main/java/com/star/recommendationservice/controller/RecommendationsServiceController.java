@@ -4,6 +4,7 @@ import com.star.recommendationservice.model.UserRecommendations;
 import com.star.recommendationservice.service.RecommendationsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +20,9 @@ public class RecommendationsServiceController {
         this.recommendationsService = recommendationsService;
     }
 
-    @GetMapping("/userId")
-    public ResponseEntity<UserRecommendations> getUserRecommendations (UUID userId) {
-        UserRecommendations recommendations =recommendationsService.getUserRecommendations(userId);
+    @GetMapping("/{user_id}")
+    public ResponseEntity<UserRecommendations> getUserRecommendations (@PathVariable UUID user_id) {
+        UserRecommendations recommendations =recommendationsService.getUserRecommendations(user_id);
         return ResponseEntity.ok(recommendations);
     }
 }

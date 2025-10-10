@@ -2,10 +2,12 @@ package com.star.recommendationservice.service.ruleset;
 
 import com.star.recommendationservice.model.Recommendation;
 import com.star.recommendationservice.repository.RecommendationsServiceRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class TopSavingRuleSet implements RecommendationRuleSet {
 
     private final RecommendationsServiceRepository recommendationsServiceRepository;
@@ -20,7 +22,9 @@ public class TopSavingRuleSet implements RecommendationRuleSet {
         if (recommendationsServiceRepository.debitTransactionIsExist(userId) > 0
                 && (debitDepositSum >= 50000 || recommendationsServiceRepository.getSavingDepositSum(userId) >= 50000)
                 && debitDepositSum > recommendationsServiceRepository.getDebitWithdrawSum(userId)) {
-            return Optional.of(new Recommendation("Top Saving", UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"),
+            return Optional.of(new Recommendation(
+                    UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"),
+                    "Top Saving",
                     """
                     Откройте свою собственную \
                     «Копилку» с нашим банком! «Копилка» — это уникальный банковский инструмент, который поможет \

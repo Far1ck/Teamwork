@@ -1,8 +1,8 @@
 package com.star.recommendationservice.service;
 
-import com.star.recommendationservice.rule.RecommendationRuleSet;
 import com.star.recommendationservice.model.Recommendation;
 import com.star.recommendationservice.model.UserRecommendations;
+import com.star.recommendationservice.service.ruleset.RecommendationRuleSet;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

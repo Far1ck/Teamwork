@@ -6,20 +6,20 @@ import java.util.UUID;
 
 public class UserRecommendations {
 
-    private UUID userId;
+    private UUID user_id;
     private List<Recommendation> recommendations;
 
-    public UserRecommendations(UUID userId, List<Recommendation> recommendations) {
-        this.userId = userId;
+    public UserRecommendations(UUID user_id, List<Recommendation> recommendations) {
+        this.user_id = user_id;
         this.recommendations = recommendations;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setUser_id(UUID user_id) {
+        this.user_id = user_id;
     }
 
     public List<Recommendation> getRecommendations() {
@@ -34,19 +34,19 @@ public class UserRecommendations {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserRecommendations that = (UserRecommendations) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(recommendations, that.recommendations);
+        return Objects.equals(user_id, that.user_id) && Objects.equals(recommendations, that.recommendations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, recommendations);
+        return Objects.hash(user_id, recommendations);
     }
 
     @Override
     public String toString() {
         return "UserRecommendations{" +
-                "userId=" + userId +
-                ", recommendations=" + recommendations +
-                '}';
+               "user_id=" + user_id +
+               ", recommendations=" + recommendations +
+               '}';
     }
 }

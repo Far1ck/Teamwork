@@ -5,13 +5,13 @@ import java.util.UUID;
 
 public class Recommendation {
 
-    private UUID id;
     private String name;
+    private UUID id;
     private String text;
 
-    public Recommendation(UUID id, String name, String text) {
-        this.id = id;
+    public Recommendation(String name, UUID id,  String text) {
         this.name = name;
+        this.id = id;
         this.text = text;
     }
 

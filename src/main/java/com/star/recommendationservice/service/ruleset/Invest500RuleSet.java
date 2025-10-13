@@ -1,5 +1,6 @@
 package com.star.recommendationservice.service.ruleset;
 
+import com.star.recommendationservice.error.UserNotFoundException;
 import com.star.recommendationservice.repository.RecommendationsServiceRepository;
 import org.springframework.stereotype.Component;
 import com.star.recommendationservice.model.Recommendation;
@@ -17,7 +18,10 @@ public class Invest500RuleSet implements RecommendationRuleSet {
     }
 
     @Override
-    public Optional<Recommendation> checkRecommendationRuleSet(UUID userId) {
+    public Optional<Recommendation> checkRecommendationRuleSet(UUID userId) throws UserNotFoundException {
+        if (recommendationsServiceRepository.userIsExist(userId) == 0) {
+            throw new UserNotFoundException("Нет пользователя с таким ID");
+        }
         if (recommendationsServiceRepository.debitTransactionIsExist(userId) > 0
         && recommendationsServiceRepository.investTransactionIsExist(userId) == 0
         && recommendationsServiceRepository.getSavingDepositSum(userId) > 1000) {

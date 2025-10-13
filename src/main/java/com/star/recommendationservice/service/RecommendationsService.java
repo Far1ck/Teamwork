@@ -1,5 +1,6 @@
 package com.star.recommendationservice.service;
 
+import com.star.recommendationservice.error.UserNotFoundException;
 import com.star.recommendationservice.model.Recommendation;
 import com.star.recommendationservice.model.UserRecommendations;
 import com.star.recommendationservice.service.ruleset.RecommendationRuleSet;
@@ -19,7 +20,7 @@ public class RecommendationsService {
         this.rules = rules;
     }
 
-    public UserRecommendations getUserRecommendations(UUID userId) {
+    public UserRecommendations getUserRecommendations(UUID userId) throws UserNotFoundException {
         List<Recommendation> recommendations = new ArrayList<>();
 
         for (RecommendationRuleSet rule : rules) {

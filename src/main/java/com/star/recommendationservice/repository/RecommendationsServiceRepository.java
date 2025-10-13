@@ -14,6 +14,16 @@ public class RecommendationsServiceRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public int userIsExist(UUID userId) {
+        Integer result = jdbcTemplate.queryForObject(
+                """
+                        SELECT COUNT(t.USER_ID)
+                        FROM TRANSACTIONS AS t
+                        WHERE t.USER_ID = ?
+                        LIMIT 1""", Integer.class, userId);
+        return result != null ? result : 0;
+    }
+
     public int debitTransactionIsExist(UUID userId) {
         Integer result = jdbcTemplate.queryForObject(
                 """

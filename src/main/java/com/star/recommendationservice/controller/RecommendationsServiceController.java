@@ -1,12 +1,10 @@
 package com.star.recommendationservice.controller;
 
+import com.star.recommendationservice.error.UserNotFoundException;
 import com.star.recommendationservice.model.UserRecommendations;
 import com.star.recommendationservice.service.RecommendationsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -18,6 +16,11 @@ public class RecommendationsServiceController {
 
     public RecommendationsServiceController(RecommendationsService recommendationsService) {
         this.recommendationsService = recommendationsService;
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> userNotFoundHandler(UserNotFoundException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @GetMapping("/{user_id}")

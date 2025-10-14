@@ -9,7 +9,10 @@ public class Recommendation {
     private UUID id;
     private String text;
 
-    public Recommendation(String name, UUID id,  String text) {
+    public Recommendation() {
+    }
+
+    public Recommendation(String name, UUID id, String text) {
         this.name = name;
         this.id = id;
         this.text = text;

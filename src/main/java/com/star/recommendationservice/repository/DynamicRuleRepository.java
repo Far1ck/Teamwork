@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DynamicRuleRepository extends JpaRepository<DynamicRule, Long> {
-
+    // Запрос в базу для удаления всех динамических правил с полученным ID продукта
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "DELETE FROM dynamic_rules WHERE product_id = :product_id")

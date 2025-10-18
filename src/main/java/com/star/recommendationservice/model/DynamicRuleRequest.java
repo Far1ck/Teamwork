@@ -2,6 +2,7 @@ package com.star.recommendationservice.model;
 
 import java.util.List;
 
+// DTO для получения JSON из запроса и последующего преобразования его в DynamicRule
 public class DynamicRuleRequest {
     private String productName;
     private String productId;

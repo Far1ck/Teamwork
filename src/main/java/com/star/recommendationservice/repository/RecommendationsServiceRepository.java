@@ -15,6 +15,8 @@ public class RecommendationsServiceRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // Запрос в базу для определения наличия пользователя с полученным ID
+    // Если есть, возвращает 1, если нет - 0
     public int userIsExist(UUID userId) {
         Integer result = jdbcTemplate.queryForObject(
                 """
@@ -25,6 +27,8 @@ public class RecommendationsServiceRepository {
         return result != null ? result : 0;
     }
 
+    // Запрос в базу для поиска хотя бы одной транзакции для продукта полученного типа
+    // Если найдена, возвращает 1, если нет - 0
     @Cacheable("userOf")
     public int userOfCheck(UUID userId, String productType) {
         Integer result = jdbcTemplate.queryForObject(
@@ -37,6 +41,8 @@ public class RecommendationsServiceRepository {
         return result != null ? result : 0;
     }
 
+    // Запрос в базу для поиска хотя бы пяти транзакций для продукта полученного типа
+    // Если найдена, возвращает 1, если нет - 0
     @Cacheable("activeUserOf")
     public int activeUserOfCheck(UUID userId, String productType) {
         Integer result = jdbcTemplate.queryForObject(
@@ -49,6 +55,7 @@ public class RecommendationsServiceRepository {
         return (result != null)&&(result == 5) ? 1 : 0;
     }
 
+    // Запрос в базу для получения суммы всех транзакций полученного типа для продукта полученного типа
     @Cacheable("transactionSum")
     public int userTransactionsSum(UUID userId, String productType, String transactionType) {
         Integer result = jdbcTemplate.queryForObject(

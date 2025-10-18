@@ -2,6 +2,7 @@ package com.star.recommendationservice.model;
 
 import java.util.List;
 
+// DTO для выведения всех динамических правил в требуемой форме
 public class DynamicRulesList {
     private List<DynamicRule> data;
 

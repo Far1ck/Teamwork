@@ -2,6 +2,7 @@ package com.star.recommendationservice.model;
 
 import java.util.List;
 
+// DTO для получения JSON из запроса и преобразования его в список Rule
 public class RuleRequest {
     private String query;
     private List<String> arguments;

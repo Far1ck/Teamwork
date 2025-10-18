@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// Сущность динамического правила
 @Entity
 @Table(name = "dynamic_rules")
 public class DynamicRule {

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+// Сущность для правил/условий, составляющих динамическое правило
 @Entity
 @Table(name = "rule")
 public class Rule {

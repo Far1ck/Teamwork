@@ -15,36 +15,39 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/rule")
 public class RuleController {
-    private RuleService ruleService;
+    private final RuleService ruleService;
 
     public RuleController(RuleService ruleService) {
         this.ruleService = ruleService;
     }
 
+    // Получение всех динамических правил
     @GetMapping
     public ResponseEntity<DynamicRulesList> getAllRules() {
         DynamicRulesList listing = new DynamicRulesList(ruleService.getAllRules());
         return ResponseEntity.ok(listing);
     }
 
+    // Добавление динамического правила
     @PostMapping
     public ResponseEntity<DynamicRule> createDynamicRule(@RequestBody DynamicRuleRequest dynamicRuleRequest) {
+        // Создание объекта DynamicRule и его инициализация
         DynamicRule dynamicRule = new DynamicRule();
         dynamicRule.setProduct_name(dynamicRuleRequest.getProductName());
         dynamicRule.setProduct_id(dynamicRuleRequest.getProductId());
         dynamicRule.setProduct_text(dynamicRuleRequest.getProductText());
-
+        // Получение списка Rule из RuleRequest и его связывание c DynamicRule
         List<Rule> rules = dynamicRuleRequest.getRules().stream()
                 .map(ruleRequest -> {
                     Rule rule = new Rule();
                     rule.setQuery(ruleRequest.getQuery());
                     rule.setArguments(ruleRequest.getArguments());
                     rule.setNegate(ruleRequest.isNegate());
+                    // Связывание двух сущностей
                     rule.setDynamicRule(dynamicRule);
                     return rule;
                 })
                 .collect(Collectors.toList());
-
         dynamicRule.setRule(rules);
         DynamicRule result = ruleService.createDynamicRule(dynamicRule);
         if (result == null) {
@@ -53,6 +56,7 @@ public class RuleController {
         return ResponseEntity.ok(result);
     }
 
+    // Удаление динамического правила
     @DeleteMapping("/{product_id}")
     public ResponseEntity<Void> deleteDynamicRules(@PathParam("product_id") String productId) {
         ruleService.deleteDynamicRules(productId);

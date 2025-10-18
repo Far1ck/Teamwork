@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+// DTO для выведения пользователя со списком подходящих для него рекомендаций
 public class UserRecommendations {
 
     private UUID user_id;

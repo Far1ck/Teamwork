@@ -8,10 +8,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
 
+// Компонент для проверки истинности полученного условия (правила)
+// Возвращает 1 или 0 в зависимости от результата проверки
 @Component
 public class RuleChecker {
-    private RecommendationsServiceRepository recommendationsServiceRepository;
+    private final RecommendationsServiceRepository recommendationsServiceRepository;
 
+    // Перечень допустимых значений для параметров
     private final static List<String> QUERY_NAMES = List.of("USER_OF", "ACTIVE_USER_OF",
             "TRANSACTION_SUM_COMPARE", "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW");
     private final static List<String> PRODUCT_TYPES = List.of("DEBIT", "CREDIT", "INVEST", "SAVING");
@@ -23,11 +26,15 @@ public class RuleChecker {
         this.recommendationsServiceRepository = recommendationsServiceRepository;
     }
 
+    // Проверка наличия пользователя с полученным ID
     public void userIsExistCheck(UUID userId) throws UserNotFoundException {
         if (recommendationsServiceRepository.userIsExist(userId) == 0) {
             throw new UserNotFoundException("Нет пользователя с таким ID");
         }
     }
+
+    // Проверка полученного условия (правила)
+    // Возвращает 1 или 0 в зависимости от результата проверки
     public int ruleCheck(UUID userId, Rule rule) throws UserNotFoundException {
         if (!QUERY_NAMES.contains(rule.getQuery())) {
             return 0;

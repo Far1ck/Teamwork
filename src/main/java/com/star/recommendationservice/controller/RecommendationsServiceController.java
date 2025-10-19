@@ -23,6 +23,7 @@ public class RecommendationsServiceController {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
+    // Получение всех подходящих рекомендаций для пользователя с определенным ID
     @GetMapping("/{user_id}")
     public ResponseEntity<UserRecommendations> getUserRecommendations (@PathVariable UUID user_id) {
         UserRecommendations recommendations =recommendationsService.getUserRecommendations(user_id);

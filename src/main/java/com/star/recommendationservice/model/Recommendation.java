@@ -3,6 +3,7 @@ package com.star.recommendationservice.model;
 import java.util.Objects;
 import java.util.UUID;
 
+// DTO для представления рекомендации
 public class Recommendation {
 
     private String name;

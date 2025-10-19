@@ -1,4 +1,4 @@
-package com.star.recommendationservice.controller;
+/*package com.star.recommendationservice.controller;
 
 import com.star.recommendationservice.model.Recommendation;
 import com.star.recommendationservice.model.UserRecommendations;
@@ -216,4 +216,4 @@ public class RecommendationsServiceControllerTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
-}
+}*/

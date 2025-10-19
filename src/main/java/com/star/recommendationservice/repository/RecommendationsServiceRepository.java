@@ -1,6 +1,7 @@
 package com.star.recommendationservice.repository;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,8 @@ public class RecommendationsServiceRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // Запрос в базу для определения наличия пользователя с полученным ID
+    // Если есть, возвращает 1, если нет - 0
     public int userIsExist(UUID userId) {
         Integer result = jdbcTemplate.queryForObject(
                 """
@@ -24,66 +27,43 @@ public class RecommendationsServiceRepository {
         return result != null ? result : 0;
     }
 
-    public int debitTransactionIsExist(UUID userId) {
+    // Запрос в базу для поиска хотя бы одной транзакции для продукта полученного типа
+    // Если найдена, возвращает 1, если нет - 0
+    @Cacheable("userOf")
+    public int userOfCheck(UUID userId, String productType) {
         Integer result = jdbcTemplate.queryForObject(
                 """
                         SELECT COUNT(i)
                         FROM (SELECT t.ID AS i FROM TRANSACTIONS AS t
                         JOIN PRODUCTS AS p ON t.PRODUCT_ID = p.ID
-                        WHERE t.USER_ID = ? AND p."TYPE" LIKE 'DEBIT'
-                        LIMIT 1)""", Integer.class, userId);
+                        WHERE t.USER_ID = ? AND p."TYPE" LIKE ?
+                        LIMIT 1)""", Integer.class, userId, productType);
         return result != null ? result : 0;
     }
 
-    public int investTransactionIsExist(UUID userId) {
+    // Запрос в базу для поиска хотя бы пяти транзакций для продукта полученного типа
+    // Если найдена, возвращает 1, если нет - 0
+    @Cacheable("activeUserOf")
+    public int activeUserOfCheck(UUID userId, String productType) {
         Integer result = jdbcTemplate.queryForObject(
                 """
                         SELECT COUNT(i)
                         FROM (SELECT t.ID AS i FROM TRANSACTIONS AS t
                         JOIN PRODUCTS AS p ON t.PRODUCT_ID = p.ID
-                        WHERE t.USER_ID = ? AND p."TYPE" LIKE 'INVEST'
-                        LIMIT 1)""", Integer.class, userId);
-        return result != null ? result : 0;
+                        WHERE t.USER_ID = ? AND p."TYPE" LIKE ?
+                        LIMIT 5)""", Integer.class, userId, productType);
+        return (result != null)&&(result == 5) ? 1 : 0;
     }
 
-    public int creditTransactionIsExist(UUID userId) {
-        Integer result = jdbcTemplate.queryForObject(
-                """
-                        SELECT COUNT(i)
-                        FROM (SELECT t.ID AS i FROM TRANSACTIONS AS t
-                        JOIN PRODUCTS AS p ON t.PRODUCT_ID = p.ID
-                        WHERE t.USER_ID = ? AND p."TYPE" LIKE 'CREDIT'
-                        LIMIT 1)""", Integer.class, userId);
-        return result != null ? result : 0;
-    }
-
-    public int getSavingDepositSum(UUID userId) {
+    // Запрос в базу для получения суммы всех транзакций полученного типа для продукта полученного типа
+    @Cacheable("transactionSum")
+    public int userTransactionsSum(UUID userId, String productType, String transactionType) {
         Integer result = jdbcTemplate.queryForObject(
                 """
                         SELECT SUM(t.AMOUNT) FROM TRANSACTIONS AS t
                         JOIN PRODUCTS AS p ON t.PRODUCT_ID = p.ID
-                        WHERE t.USER_ID = ? AND p."TYPE" LIKE 'SAVING' AND t."TYPE" LIKE 'DEPOSIT'""",
-                Integer.class, userId);
-        return result != null ? result : 0;
-    }
-
-    public int getDebitDepositSum(UUID userId) {
-        Integer result = jdbcTemplate.queryForObject(
-                """
-                        SELECT SUM(t.AMOUNT) FROM TRANSACTIONS AS t
-                        JOIN PRODUCTS AS p ON t.PRODUCT_ID = p.ID
-                        WHERE t.USER_ID = ? AND p."TYPE" LIKE 'DEBIT' AND t."TYPE" LIKE 'DEPOSIT'""",
-                Integer.class, userId);
-        return result != null ? result : 0;
-    }
-
-    public int getDebitWithdrawSum(UUID userId) {
-        Integer result = jdbcTemplate.queryForObject(
-                """
-                        SELECT SUM(t.AMOUNT) FROM TRANSACTIONS AS t
-                        JOIN PRODUCTS AS p ON t.PRODUCT_ID = p.ID
-                        WHERE t.USER_ID = ? AND p."TYPE" LIKE 'DEBIT' AND t."TYPE" LIKE 'WITHDRAW'""",
-                Integer.class, userId);
+                        WHERE t.USER_ID = ? AND p."TYPE" LIKE ? AND t."TYPE" LIKE ?""",
+                Integer.class, userId, productType, transactionType);
         return result != null ? result : 0;
     }
 }

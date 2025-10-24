@@ -7,7 +7,7 @@ public class DynamicRuleRequest {
     private String productName;
     private String productId;
     private String productText;
-    private List<RuleRequest> rules;
+    private List<RuleRequest> rule;
 
     public String getProductName() {
         return productName;
@@ -33,11 +33,11 @@ public class DynamicRuleRequest {
         this.productText = productText;
     }
 
-    public List<RuleRequest> getRules() {
-        return rules;
+    public List<RuleRequest> getRule() {
+        return rule;
     }
 
-    public void setRules(List<RuleRequest> rules) {
-        this.rules = rules;
+    public void setRule(List<RuleRequest> rule) {
+        this.rule = rule;
     }
 }

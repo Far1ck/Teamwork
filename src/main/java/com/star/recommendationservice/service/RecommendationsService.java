@@ -2,9 +2,9 @@ package com.star.recommendationservice.service;
 
 import com.star.recommendationservice.error.UserNotFoundException;
 import com.star.recommendationservice.model.DynamicRule;
-import com.star.recommendationservice.model.Recommendation;
+import com.star.recommendationservice.model.recommendation.Recommendation;
 import com.star.recommendationservice.model.Rule;
-import com.star.recommendationservice.model.UserRecommendations;
+import com.star.recommendationservice.model.recommendation.UserRecommendations;
 import com.star.recommendationservice.repository.DynamicRuleRepository;
 import org.springframework.stereotype.Service;
 

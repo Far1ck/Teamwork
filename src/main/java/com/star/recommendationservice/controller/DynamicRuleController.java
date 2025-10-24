@@ -4,7 +4,7 @@ import com.star.recommendationservice.model.DynamicRule;
 import com.star.recommendationservice.model.DynamicRuleRequest;
 import com.star.recommendationservice.model.DynamicRulesList;
 import com.star.recommendationservice.model.Rule;
-import com.star.recommendationservice.service.RuleService;
+import com.star.recommendationservice.service.DynamicRuleService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +14,17 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rule")
-public class RuleController {
-    private final RuleService ruleService;
+public class DynamicRuleController {
+    private final DynamicRuleService dynamicRuleService;
 
-    public RuleController(RuleService ruleService) {
-        this.ruleService = ruleService;
+    public DynamicRuleController(DynamicRuleService dynamicRuleService) {
+        this.dynamicRuleService = dynamicRuleService;
     }
 
     // Получение всех динамических правил
     @GetMapping
     public ResponseEntity<DynamicRulesList> getAllRules() {
-        DynamicRulesList listing = new DynamicRulesList(ruleService.getAllRules());
+        DynamicRulesList listing = new DynamicRulesList(dynamicRuleService.getAllRules());
         return ResponseEntity.ok(listing);
     }
 
@@ -37,7 +37,7 @@ public class RuleController {
         dynamicRule.setProduct_id(dynamicRuleRequest.getProductId());
         dynamicRule.setProduct_text(dynamicRuleRequest.getProductText());
         // Получение списка Rule из RuleRequest и его связывание c DynamicRule
-        List<Rule> rules = dynamicRuleRequest.getRules().stream()
+        List<Rule> rules = dynamicRuleRequest.getRule().stream()
                 .map(ruleRequest -> {
                     Rule rule = new Rule();
                     rule.setQuery(ruleRequest.getQuery());
@@ -49,7 +49,7 @@ public class RuleController {
                 })
                 .collect(Collectors.toList());
         dynamicRule.setRule(rules);
-        DynamicRule result = ruleService.createDynamicRule(dynamicRule);
+        DynamicRule result = dynamicRuleService.createDynamicRule(dynamicRule);
         if (result == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -58,8 +58,8 @@ public class RuleController {
 
     // Удаление динамического правила
     @DeleteMapping("/{product_id}")
-    public ResponseEntity<Void> deleteDynamicRules(@PathParam("product_id") String productId) {
-        ruleService.deleteDynamicRules(productId);
+    public ResponseEntity<Void> deleteDynamicRule(@PathParam("product_id") String productId) {
+        dynamicRuleService.deleteDynamicRules(productId);
         return ResponseEntity.noContent().build();
     }
 }

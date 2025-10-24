@@ -1,7 +1,7 @@
 package com.star.recommendationservice.controller;
 
 import com.star.recommendationservice.error.UserNotFoundException;
-import com.star.recommendationservice.model.UserRecommendations;
+import com.star.recommendationservice.model.recommendation.UserRecommendations;
 import com.star.recommendationservice.service.RecommendationsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

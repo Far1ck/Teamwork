@@ -1,4 +1,4 @@
-package com.star.recommendationservice.model;
+package com.star.recommendationservice.model.recommendation;
 
 import java.util.List;
 import java.util.Objects;

@@ -28,14 +28,19 @@ public class RuleChecker {
 
     // Проверка наличия пользователя с полученным ID
     public void userIsExistCheck(UUID userId) throws UserNotFoundException {
-        if (recommendationsServiceRepository.userIsExist(userId) == 0) {
+        if (recommendationsServiceRepository.userIsExist(userId) != 1) {
             throw new UserNotFoundException("Нет пользователя с таким ID");
         }
     }
 
+    //Получение имени потльзователя по ID
+    public String getUserName(UUID userId) {
+        return recommendationsServiceRepository.getUserName(userId);
+    }
+
     // Проверка полученного условия (правила)
     // Возвращает 1 или 0 в зависимости от результата проверки
-    public int ruleCheck(UUID userId, Rule rule) throws UserNotFoundException {
+    public int ruleCheck(UUID userId, Rule rule) {
         if (!QUERY_NAMES.contains(rule.getQuery())) {
             return 0;
         }

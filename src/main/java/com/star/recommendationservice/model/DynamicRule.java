@@ -17,7 +17,7 @@ public class DynamicRule {
     private String product_id;
     private String product_text;
 
-    @OneToMany(mappedBy = "dynamicRule", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dynamicRule", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Rule> rule = new ArrayList<>();
 
     public Long getId() {

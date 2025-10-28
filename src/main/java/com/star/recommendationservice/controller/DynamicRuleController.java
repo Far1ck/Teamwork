@@ -1,9 +1,6 @@
 package com.star.recommendationservice.controller;
 
-import com.star.recommendationservice.model.DynamicRule;
-import com.star.recommendationservice.model.DynamicRuleRequest;
-import com.star.recommendationservice.model.DynamicRulesList;
-import com.star.recommendationservice.model.Rule;
+import com.star.recommendationservice.model.*;
 import com.star.recommendationservice.service.DynamicRuleService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +58,12 @@ public class DynamicRuleController {
     public ResponseEntity<Void> deleteDynamicRule(@PathParam("product_id") String productId) {
         dynamicRuleService.deleteDynamicRules(productId);
         return ResponseEntity.noContent().build();
+    }
+
+    // Возвращает статистику срабатывания правил
+    @GetMapping("/stats")
+    public ResponseEntity<Stats> getStats() {
+        Stats result = new Stats(dynamicRuleService.getAllCounters());
+        return ResponseEntity.ok(result);
     }
 }

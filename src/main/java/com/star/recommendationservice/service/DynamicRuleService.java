@@ -1,5 +1,6 @@
 package com.star.recommendationservice.service;
 
+import com.star.recommendationservice.model.Counter;
 import com.star.recommendationservice.model.DynamicRule;
 import com.star.recommendationservice.repository.DynamicRuleRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class DynamicRuleService {
         DynamicRule result = null;
         try {
             result = dynamicRuleRepository.save(dynamicRule);
+            dynamicRuleRepository.addProductCounter(dynamicRule.getProduct_id());
         } catch (Exception ignored) {}
         return result;
     }
@@ -33,5 +35,11 @@ public class DynamicRuleService {
     // Удаление из базы динамического правила
     public void deleteDynamicRules(String productId) {
         dynamicRuleRepository.deleteByProductId(productId);
+        dynamicRuleRepository.deleteProductCounter(productId);
+    }
+
+    // Получение всех счетчиков срабатывания правил
+    public List<Counter> getAllCounters() {
+        return dynamicRuleRepository.getAllCounters();
     }
 }

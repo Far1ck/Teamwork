@@ -27,8 +27,8 @@
   
 <h2>🖇 Ссылки на документы:</h2>
 <p>
-        <a herf="https://github.com/Far1ck/Teamwork/wiki/user-stories">User Stories</a>
-        <a herf="https://github.com/Far1ck/Teamwork/wiki/non‐functional‐requirements">Нефункциональные требования</a>
+        <a href="https://github.com/Far1ck/Teamwork/wiki/user-stories">User Stories</a>
+        <a href="https://github.com/Far1ck/Teamwork/wiki/non‐functional‐requirements">Нефункциональные требования</a>
         <li>[Таблица трейсинга требований] ()</li>
         <li>[Диаграмма компонентов] ()</li>
         <li>[Activity Diagram] ()</li>

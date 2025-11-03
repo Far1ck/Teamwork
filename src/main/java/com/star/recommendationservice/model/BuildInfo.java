@@ -1,7 +1,6 @@
 package com.star.recommendationservice.model;
 
-import org.springframework.beans.factory.annotation.Value;
-
+// DТО для передачи информации о сборке
 public class BuildInfo {
 
     private String name;

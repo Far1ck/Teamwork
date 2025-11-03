@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
 
-// Компонент для проверки истинности полученного условия (правила)
-// Возвращает 1 или 0 в зависимости от результата проверки
+/**
+ * Компонент для проверки истинности полученного условия (правила)
+ * Возвращает 1 или 0 в зависимости от результата проверки
+ */
 @Component
 public class RuleChecker {
     private final RecommendationsServiceRepository recommendationsServiceRepository;
@@ -26,20 +28,28 @@ public class RuleChecker {
         this.recommendationsServiceRepository = recommendationsServiceRepository;
     }
 
-    // Проверка наличия пользователя с полученным ID
+    /**
+     * Проверяет наличие пользователя в БД
+     * @param userId ID пользователя, наличие которого мы проверяем
+     * @throws UserNotFoundException выбрасывается, если пользователь с заданным ID не найден
+     */
     public void userIsExistCheck(UUID userId) throws UserNotFoundException {
         if (recommendationsServiceRepository.userIsExist(userId) != 1) {
             throw new UserNotFoundException("Нет пользователя с таким ID");
         }
     }
 
-    //Получение имени потльзователя по ID
+    // Получение имени пользователя по ID
     public String getUserName(UUID userId) {
         return recommendationsServiceRepository.getUserName(userId);
     }
 
-    // Проверка полученного условия (правила)
-    // Возвращает 1 или 0 в зависимости от результата проверки
+    /**
+     * Проверка полученного условия (правила)
+     * @param userId ID пользователя, для которого проверяется условие
+     * @param rule Правило (условие), которое проверяется
+     * @return Возвращает 1, если условие соблюдается, 0 - если нет
+     */
     public int ruleCheck(UUID userId, Rule rule) {
         if (!QUERY_NAMES.contains(rule.getQuery())) {
             return 0;
@@ -92,6 +102,13 @@ public class RuleChecker {
         }
     }
 
+    /**
+     * Метод проверки выражения по знаку сравнения в строковом представлении
+     * @param leftValue Левое сравниваемое значение
+     * @param sign Знак в строковом представлении (String)
+     * @param rightValue Правое сравниваемое значение
+     * @return Возвращает true, если переданное выражение истинно, false - в остальных случаях
+     */
     private static boolean compareFromStringSign(int leftValue, String sign, int rightValue) {
         return switch (sign) {
             case ">" -> leftValue > rightValue;

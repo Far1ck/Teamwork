@@ -17,11 +17,13 @@ public class ManagementController {
         this.managementService = managementService;
     }
 
+    // Метод очистки кэша
     @PostMapping("/clear-caches")
     public void clearCaches() {
         managementService.clearCaches();
     }
 
+    // Метод для получения информации о сборке
     @GetMapping("/info")
     ResponseEntity<BuildInfo> getInfo() {
         BuildInfo buildInfo = new BuildInfo(managementService.getName(), managementService.getVersion());

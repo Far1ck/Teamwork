@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Сервис для работы Telegram API
+ */
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
 

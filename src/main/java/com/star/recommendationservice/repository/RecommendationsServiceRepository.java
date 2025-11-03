@@ -38,8 +38,11 @@ public class RecommendationsServiceRepository {
                 .build();
     }
 
-    // Запрос в базу для определения наличия пользователя с полученным ID
-    // Если есть, возвращает 1, если нет - 0
+    /**
+     * Запрос в базу данных для проверки существования в ней пользователя
+     * @param userId ID пользователя, которого мы проверяем
+     * @return Возвращает 1, если пользователь есть, 0 - если пользователя нет или их больше 1
+     */
     public int userIsExist(UUID userId) {
         Integer result = jdbcTemplate.queryForObject(
                 """
@@ -50,7 +53,11 @@ public class RecommendationsServiceRepository {
         return result != null && result == 1 ? result : 0;
     }
 
-    // Получение полного имени пользователя из базы по его ID
+    /**
+     * Запрос в БД для получения полного имени пользователя
+     * @param userId ID пользователя, имя которого мы хотим получить
+     * @return Возвращает строку с полным именем пользователя
+     */
     public String getUserName(UUID userId) {
         String firstName = jdbcTemplate.queryForObject(
                 """
@@ -67,8 +74,12 @@ public class RecommendationsServiceRepository {
         return firstName + " " + lastName;
     }
 
-    // Запрос в базу для поиска хотя бы одной транзакции для продукта полученного типа
-    // Если найдена, возвращает 1, если нет - 0
+    /**
+     * Запрос в БД (если нет в кэше) для поиска хотя бы одной транзакции пользователя для продукта полученного типа
+     * @param userId ID пользователя, для которого ищется транзакция
+     * @param productType Тип продукта, по которому ищется транзакция
+     * @return Возвращает 1, если транзакция есть, 0 - если нет
+     */
     public int userOfCheck(UUID userId, String productType) {
         String cacheKey = userId + "|" + productType;
         return userOfCheckCache.get(cacheKey, (key) -> {
@@ -83,8 +94,12 @@ public class RecommendationsServiceRepository {
         });
     }
 
-    // Запрос в базу для поиска хотя бы пяти транзакций для продукта полученного типа
-    // Если найдена, возвращает 1, если нет - 0
+    /**
+     * Запрос в БД (если нет в кэше) для поиска хотя бы пяти транзакций пользователя для продукта полученного типа
+     * @param userId ID пользователя, для которого ищутся транзакции
+     * @param productType Тип продукта, для которого ищутся транзакции
+     * @return Возвращает 1, если найдено 5 или больше транзакций, 0 - если меньше
+     */
     public int activeUserOfCheck(UUID userId, String productType) {
         String cacheKey = userId + "|" + productType;
         return activeUserOfCheckCache.get(cacheKey, (key) -> {
@@ -99,7 +114,14 @@ public class RecommendationsServiceRepository {
         });
     }
 
-    // Запрос в базу для получения суммы всех транзакций полученного типа для продукта полученного типа
+    /**
+     * Запрос в БД (если нет в кэше) для получения суммы всех транзакций пользователя полученного типа
+     * для продукта полученного типа
+     * @param userId ID пользователя, для которого вычисляется сумма
+     * @param productType Тип продукта, для которого вычисляется сумма
+     * @param transactionType Тип трназакций, сумма которых вычисляется
+     * @return Возвращает сумму транзакций
+     */
     public int userTransactionsSum(UUID userId, String productType, String transactionType) {
         String cacheKey = userId + "|" + productType + "|" + transactionType;
         return transactionsSumCache.get(cacheKey, (key) -> {
@@ -113,6 +135,9 @@ public class RecommendationsServiceRepository {
         });
     }
 
+    /**
+     * Метод для очистки кэша
+     */
     public void clearAllCaches() {
         userOfCheckCache.invalidateAll();
         activeUserOfCheckCache.invalidateAll();

@@ -27,11 +27,11 @@
   
 <h2>🖇 Ссылки на документы:</h2>
 <p>
-        <li>[User Story](/wiki/user_stories.md)</li>
-        <li>[Нефонкциональные требования](/wiki/non_functional_requirements.md)</li>
-        <li>[Таблица трейсинга требований]()</li>
-        <li>[Диаграмма компонентов]()</li>
-        <li>[Activity Diagram]()</li>
-        <li>[OpenAPI (Swagger)]()</li>
-        <li>[Требования к развёртыванию]()</li>
+        <li>[User Story] (https://github.com/Far1ck/Teamwork/wiki/user_stories)</li>
+        <li>[Нефонкциональные требования] (https://github.com/Far1ck/Teamwork/wiki/non‐functional‐requirements)</li>
+        <li>[Таблица трейсинга требований] ()</li>
+        <li>[Диаграмма компонентов] ()</li>
+        <li>[Activity Diagram] ()</li>
+        <li>[OpenAPI (Swagger)] ()</li>
+        <li>[Требования к развёртыванию] ()</li>
 </p>

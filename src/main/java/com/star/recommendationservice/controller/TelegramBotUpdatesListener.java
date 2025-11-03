@@ -1,4 +1,4 @@
-package com.star.recommendationservice.service;
+package com.star.recommendationservice.controller;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -6,6 +6,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.star.recommendationservice.error.UserNotFoundException;
 import com.star.recommendationservice.model.recommendation.Recommendation;
+import com.star.recommendationservice.service.RecommendationsService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 

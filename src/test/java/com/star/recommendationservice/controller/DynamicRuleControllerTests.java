@@ -138,6 +138,22 @@ public class DynamicRuleControllerTests {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    public void getStats_ReturnSomeStats() throws Exception {
+        List<Counter> counterList = List.of(new Counter(), new Counter());
+        Stats result = new Stats(counterList);
+
+        when(dynamicRuleRepository.getAllCounters()).thenReturn(counterList);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/rule/stats")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.stats").isNotEmpty())
+                .andExpect(jsonPath("$.stats[0].count").value(0))
+                .andExpect(jsonPath("$.stats[1].count").value(0));
+    }
+
     private static JSONObject getJsonObject() throws JSONException {
         JSONObject dynamicRuleRequest = new JSONObject();
         JSONArray ruleArray = new JSONArray();

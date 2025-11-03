@@ -6,8 +6,6 @@ import com.star.recommendationservice.model.recommendation.Recommendation;
 import com.star.recommendationservice.model.Rule;
 import com.star.recommendationservice.model.recommendation.UserRecommendations;
 import com.star.recommendationservice.repository.DynamicRuleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -31,7 +29,6 @@ public class RecommendationsService {
         ruleChecker.userIsExistCheck(userId);
         List<DynamicRule> ruleList = dynamicRuleRepository.findAll(); // Список всех дин. правил из БД
         Set<Recommendation> recommendationSet = new LinkedHashSet<>(); // Набор правил, прошедших проверку
-        Recommendation recommendation;
         // Проверка всех динамических правил и в случае успешной проверки добавление их в Set
         for(DynamicRule dynamicRule : ruleList) {
             int fulfillmentOfConditions = 1;
@@ -40,7 +37,7 @@ public class RecommendationsService {
                 if (fulfillmentOfConditions == 0) break;
             }
             if(fulfillmentOfConditions == 1) {
-                recommendation = new Recommendation(dynamicRule.getProduct_name(),
+                Recommendation recommendation = new Recommendation(dynamicRule.getProduct_name(),
                         UUID.fromString(dynamicRule.getProduct_id()),
                         dynamicRule.getProduct_text());
                 int setSize = recommendationSet.size();

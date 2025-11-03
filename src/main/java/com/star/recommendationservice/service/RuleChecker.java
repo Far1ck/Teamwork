@@ -47,7 +47,7 @@ public class RuleChecker {
         List<String> args = rule.getArguments();
         switch (rule.getQuery()) {
             case "USER_OF":
-                if (args.isEmpty() || !PRODUCT_TYPES.contains(args.get(0))) return 0;
+                if (args.size() != 1 || !PRODUCT_TYPES.contains(args.get(0))) return 0;
                 int result1 = recommendationsServiceRepository.userOfCheck(userId, args.get(0));
                 if ((result1 == 1) != rule.isNegate()) {
                     return 1;
@@ -55,7 +55,7 @@ public class RuleChecker {
                     return 0;
                 }
             case "ACTIVE_USER_OF":
-                if (args.isEmpty() || !PRODUCT_TYPES.contains(args.get(0))) return 0;
+                if (args.size() != 1 || !PRODUCT_TYPES.contains(args.get(0))) return 0;
                 int result2 = recommendationsServiceRepository.activeUserOfCheck(userId, args.get(0));
                 if ((result2 == 1) != rule.isNegate()) {
                     return 1;
@@ -63,7 +63,7 @@ public class RuleChecker {
                     return 0;
                 }
             case "TRANSACTION_SUM_COMPARE":
-                if (args.size() < 4 || !PRODUCT_TYPES.contains(args.get(0))
+                if (args.size() != 4 || !PRODUCT_TYPES.contains(args.get(0))
                 || !TRANSACTION_TYPES.contains(args.get(1))
                 || !SIGNS.contains(args.get(2))
                 || Integer.parseInt(args.get(3)) < 0) {
@@ -77,7 +77,7 @@ public class RuleChecker {
                     return 0;
                 }
             case "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW":
-                if (args.size() < 2 || !PRODUCT_TYPES.contains(args.get(0))
+                if (args.size() != 2 || !PRODUCT_TYPES.contains(args.get(0))
                         || !SIGNS.contains(args.get(1))) {
                     return 0;
                 }

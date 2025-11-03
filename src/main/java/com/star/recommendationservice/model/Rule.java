@@ -14,7 +14,7 @@ public class Rule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
-    private String query;
+    private String query = "";
     private List<String> arguments;
     private boolean negate;
 

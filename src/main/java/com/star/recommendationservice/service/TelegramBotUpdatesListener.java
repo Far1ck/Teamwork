@@ -42,6 +42,9 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     UUID uuid = UUID.fromString(message);
                     List<Recommendation> recommendations = recommendationsService.getUserRecommendations(uuid).getRecommendations();
                     String userName = recommendationsService.getUserName(uuid);
+                    if (recommendations.isEmpty()) {
+                        sendMessage(chatId, "Здравствуйте, " + userName + ". К сожалению, для Вас новых продуктов нет");
+                    }
                     StringBuilder result = new StringBuilder("Здравствуйте, " + userName + ".\nНовые продукты для вас:\n\n");
                     int recommendationCounter = 1;
                     for (Recommendation recommendation : recommendations) {

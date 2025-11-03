@@ -44,7 +44,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             } else if (recommendationsService.checkUserExistence(chatId) && !message.isEmpty()
             && message.startsWith("/recommend ")) {
                 try {
-                    UUID uuid = UUID.fromString(message);
+                    UUID uuid = UUID.fromString(message.substring("/recommend ".length()));
                     List<Recommendation> recommendations = recommendationsService.getUserRecommendations(uuid).getRecommendations();
                     String userName = recommendationsService.getUserName(uuid);
                     if (recommendations.isEmpty()) {

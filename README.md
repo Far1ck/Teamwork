@@ -31,7 +31,7 @@
         <li><a href="https://github.com/Far1ck/Teamwork/wiki/non‐functional‐requirements">Нефункциональные требования</a></li>
         <li><a href="https://github.com/Far1ck/Teamwork/wiki/requirements‐traceability">Таблица трейсинга требований</a></li>
         <li><a href="https://github.com/Far1ck/Teamwork/wiki/component%E2%80%90diagram">Диаграмма компонентов</a></li>
-        <li>[Activity Diagram] ()</li>
-        <li>[OpenAPI (Swagger)] ()</li>
-        <li>[Требования к развёртыванию] ()</li>
+        <li><a href="https://github.com/Far1ck/Teamwork/wiki/component%E2%80%90diagram">Activity Diagram</a></li>
+        <li><a href="https://github.com/Far1ck/Teamwork/wiki/component%E2%80%90diagram">OpenAPI (Swagger)</a></li>
+        <li><a href="https://github.com/Far1ck/Teamwork/wiki/component%E2%80%90diagram">Требования к развёртыванию</a></li>
 </p>

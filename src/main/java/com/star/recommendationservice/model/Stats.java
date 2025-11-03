@@ -2,6 +2,7 @@ package com.star.recommendationservice.model;
 
 import java.util.List;
 
+// DTO для выведения статистики
 public class Stats {
     private List<Counter> stats;
 

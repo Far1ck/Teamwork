@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 
-// Сервис для добавления, получения и удаления динамических правил
+/**
+ * Сервис для добавления, получения и удаления динамических правил
+ */
 @Service
 public class DynamicRuleService {
     private final DynamicRuleRepository dynamicRuleRepository;
@@ -22,7 +24,7 @@ public class DynamicRuleService {
         return dynamicRuleRepository.findAll();
     }
 
-    // Добавление в базу динамического правила
+    // Добавление в базу динамического правила и счетчика срабатываний для него
     public DynamicRule createDynamicRule(DynamicRule dynamicRule) {
         DynamicRule result = null;
         try {
@@ -32,13 +34,13 @@ public class DynamicRuleService {
         return result;
     }
 
-    // Удаление из базы динамического правила
+    // Удаление из базы динамического правила и его счетчика срабатываний
     public void deleteDynamicRules(String productId) {
         dynamicRuleRepository.deleteByProductId(productId);
         dynamicRuleRepository.deleteProductCounter(productId);
     }
 
-    // Получение всех счетчиков срабатывания правил
+    // Получение всех счетчиков срабатывания динамических правил
     public List<Counter> getAllCounters() {
         return dynamicRuleRepository.getAllCounters();
     }

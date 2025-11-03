@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-// Сервис для получения всех подходящих рекомендаций для пользователя с заданным ID
+/**
+ * Сервис для получения всех подходящих рекомендаций для пользователя с заданным ID
+ */
 @Service
 public class RecommendationsService {
 
@@ -22,10 +24,13 @@ public class RecommendationsService {
         this.ruleChecker = ruleChecker;
     }
 
-    // Проверка и получение всех динамических правил для пользователя с заданным ID
-    // Возвращает обьект UserRecommendations
+    /**
+     * Проверка и получение всех динамических правил для пользователя с заданным ID
+     * @param userId ID пользователя, рекомендации которого мы хотим получить
+     * @return Возвращает объект UserRecommendation c ID пользователя и рекомендациями для него
+     * @throws UserNotFoundException выбрасывается, если пользователь с заданным ID не найден
+     */
     public UserRecommendations getUserRecommendations(UUID userId) throws UserNotFoundException {
-        // Проверка наличия пользователя
         ruleChecker.userIsExistCheck(userId);
         List<DynamicRule> ruleList = dynamicRuleRepository.findAll(); // Список всех дин. правил из БД
         Set<Recommendation> recommendationSet = new LinkedHashSet<>(); // Набор правил, прошедших проверку
@@ -55,12 +60,12 @@ public class RecommendationsService {
        return ruleChecker.getUserName(userId);
     }
 
-    // Проверка на нового пользователя бота
+    // Проверка на нового пользователя Telegram-бота
     public boolean checkUserExistence(Long userId) {
         return dynamicRuleRepository.userIsExist(userId.toString()) == 1;
     }
 
-    // Добавление нового пользователя бота
+    // Добавление нового пользователя Telegram-бота
     public void addNewUser(Long userId) {
         dynamicRuleRepository.addNewUser(userId.toString());
     }

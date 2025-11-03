@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+// Сущность для хранения счетчиков срабатывания динамических правил
 @Entity
 @Table(name = "response_counters")
 public class Counter {

@@ -38,9 +38,11 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             Long chatId = update.message().chat().id();
             String message = update.message().text();
             if (!recommendationsService.checkUserExistence(chatId) && !message.isEmpty()) {
-                sendMessage(chatId, "На связи банк \"Star\"! Для получения рекомендаций введите, пожалуйста, ID пользователя...");
+                sendMessage(chatId, "На связи банк \"Star\"! Для получения рекомендаций введите, пожалуйста," +
+                        " команду /recommend <ID пользователя>");
                 recommendationsService.addNewUser(chatId);
-            } else if (recommendationsService.checkUserExistence(chatId) && !message.isEmpty()) {
+            } else if (recommendationsService.checkUserExistence(chatId) && !message.isEmpty()
+            && message.startsWith("/recommend ")) {
                 try {
                     UUID uuid = UUID.fromString(message);
                     List<Recommendation> recommendations = recommendationsService.getUserRecommendations(uuid).getRecommendations();
@@ -57,10 +59,12 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     }
                     sendMessage(chatId, result.toString());
                 } catch (UserNotFoundException e) {
-                    sendMessage(chatId, "Пользователь с таким ID не найден.");
+                    sendMessage(chatId, "Пользователь с таким ID не найден");
                 } catch (IllegalArgumentException e) {
-                    sendMessage(chatId, "Некорректный формат ID.");
+                    sendMessage(chatId, "Некорректный формат ID");
                 }
+            } else {
+                sendMessage(chatId, "Ошибка! Попробуйте еще раз");
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
